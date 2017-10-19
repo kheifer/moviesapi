@@ -30,7 +30,7 @@ public class MovieListActivity extends AppCompatActivity {
     @Bind(R.id.responseTextView) TextView mNewSearchString;
     @Bind (R.id.recycleViewer) RecyclerView mRecycleView;
     private MovieListAdapter mAdapter;
-    public ArrayList<Movie> movies = new ArrayList<>();
+    public ArrayList<Movie> mMovies = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +42,14 @@ public class MovieListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String query = intent.getStringExtra("query");
 
-        mNewSearchString.setText("You searched for: "+query);
+        mNewSearchString.setText("You searched for: " + query);
 
         getMovies(query);
     }
+
     private void getMovies(String query){
         final MovieService movieService = new MovieService();
+
         movieService.findMovies(query, new Callback(){
 
 
@@ -59,15 +61,15 @@ public class MovieListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response){
 
-                movies = movieService.processResults(response);
+                mMovies = movieService.processResults(response);
 
                 MovieListActivity.this.runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-                        mAdapter = new MovieListAdapter(getApplicationContext(), movies);
-                        mRecycleView.setAdapter(mAdapter);
+                        mAdapter = new MovieListAdapter(getApplicationContext(), mMovies);
                         RecyclerView.LayoutManager layout = new LinearLayoutManager(MovieListActivity.this);
+                        mRecycleView.setAdapter(mAdapter);
                         mRecycleView.setLayoutManager(layout);
                         mRecycleView.setHasFixedSize(true);
 

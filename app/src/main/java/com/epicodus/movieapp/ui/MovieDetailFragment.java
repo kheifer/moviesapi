@@ -1,9 +1,8 @@
 package com.epicodus.movieapp.ui;
 
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,17 +20,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MovieDetailFragment extends Fragment {
-    @Bind(R.id.movieTitle)
-    TextView mMovieTitle;
-    @Bind(R.id.synopsis)
-    TextView mSynopsis;
-    @Bind(R.id.movieImage)
-    ImageView mImage;
-    @Bind(R.id.ratingTextView)
-    TextView mRating;
-    @Bind(R.id.releaseDate)
-    TextView mRelease;
+public class MovieDetailFragment extends Fragment implements View.OnClickListener{
+    private static final int MAX_WIDTH = 400;
+    private static final int MAX_HEIGHT = 300;
+
+    @Bind(R.id.movieTitle) TextView mMovieTitle;
+    @Bind(R.id.synopsis) TextView mSynopsis;
+    @Bind(R.id.movieImage) ImageView mImage;
+    @Bind(R.id.ratingTextView) TextView mRating;
+    @Bind(R.id.releaseDate) TextView mRelease;
 
     private Movie mMovie;
 
@@ -44,18 +41,23 @@ public class MovieDetailFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mMovie = Parcels.unwrap(getArguments().getParcelable("movie"));
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mMovie = Parcels.unwrap(getArguments().getParcelable("movie"));
+
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         ButterKnife.bind(this, view);
 
-        Picasso.with(view.getContext()).load(mMovie.getmPoster()).into(mImage);
+        Picasso.with(view.getContext()).load(mMovie.getmPoster()).resize(MAX_WIDTH, MAX_HEIGHT)
+                .centerCrop().into(mImage);
 
         mMovieTitle.setText(mMovie.getmTitle());
         mSynopsis.setText(mMovie.getmSynopsis());
@@ -63,5 +65,10 @@ public class MovieDetailFragment extends Fragment {
         mRelease.setText(mMovie.getmRelease());
 
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }

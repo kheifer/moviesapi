@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view == mButton){
             Intent searchIntent = new Intent(MainActivity.this, MovieListActivity.class);
             String query= mEditText.getText().toString();
-            Log.d("query", query);
             searchIntent.putExtra("query", query);
             startActivity(searchIntent);
         }

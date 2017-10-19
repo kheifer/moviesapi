@@ -1,7 +1,9 @@
 package com.epicodus.movieapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,10 @@ import android.widget.TextView;
 
 import com.epicodus.movieapp.R;
 import com.epicodus.movieapp.models.Movie;
+import com.epicodus.movieapp.ui.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -22,32 +27,15 @@ import butterknife.ButterKnife;
  */
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>{
+    private static final int MAX_WIDTH = 200;
+    private static final int MAX_HEIGHT = 200;
+
     private ArrayList<Movie> mMovies = new ArrayList<>();
     private Context mContext;
 
-    public MovieListAdapter(Context context, ArrayList<Movie>movies){
+    public MovieListAdapter(Context context, ArrayList<Movie> movies){
         mContext = context;
         mMovies = movies;
-    }
-
-    public class MovieViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.moviePoster) ImageView mMoviePoster;
-        @Bind(R.id.currentMovieTitle) TextView mMovieTitle;
-        @Bind(R.id.ratingTextView) TextView mRating;
-
-        private Context mContext;
-
-        public MovieViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            mContext = itemView.getContext();
-        }
-        public void bindMovie(Movie movie){
-            mMovieTitle.setText(movie.getmTitle());
-            mRating.setText("Rating: "+movie.getmRating());
-            Picasso.with(mContext).load(movie.getmPoster()).into(mMoviePoster);
-
-        }
     }
 
     @Override
@@ -66,4 +54,43 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     public int getItemCount() {
         return mMovies.size();
     }
+
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        @Bind(R.id.moviePoster) ImageView mMoviePoster;
+        @Bind(R.id.currentMovieTitle) TextView mMovieTitle;
+        @Bind(R.id.ratingTextView) TextView mRating;
+
+        private Context mContext;
+
+        public MovieViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+
+            mContext = itemView.getContext();
+            itemView.setOnClickListener(this);
+        }
+
+        public void bindMovie(Movie movie){
+            mMovieTitle.setText(movie.getmTitle());
+            mRating.setText("Rating: "+movie.getmRating());
+            Picasso.with(mContext).load(movie.getmPoster()).resize(MAX_WIDTH, MAX_HEIGHT).centerCrop().into(mMoviePoster);
+
+
+        }
+
+        @Override
+        public void onClick(View v){
+            int itemPosition = getLayoutPosition();
+            Log.d("context", mContext+"");
+            Intent intent = new Intent(mContext, MovieDetailActivity.class);
+            intent.putExtra("position",itemPosition);
+            intent.putExtra("movies", Parcels.wrap(mMovies));
+            Log.d("Intent", intent+"");
+            mContext.startActivity(intent);
+        }
+    }
+
+
+
+
 }

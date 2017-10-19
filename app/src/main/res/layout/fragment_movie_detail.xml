@@ -81,9 +81,5 @@
             android:gravity="center"
             android:layout_centerVertical="true"
             android:layout_alignStart="@+id/websiteTextView" />
-
     </RelativeLayout>
-
-
-
 </FrameLayout>

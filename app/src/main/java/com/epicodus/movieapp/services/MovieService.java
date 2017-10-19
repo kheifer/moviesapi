@@ -46,13 +46,8 @@ public class MovieService {
     }
     public ArrayList<Movie> processResults(Response response){
         ArrayList<Movie> movies = new ArrayList<>();
-
-        Log.d("INSIDE", "a thing");
-
         try{
             String jsonData = response.body().string();
-
-            Log.d("JSONdataString", jsonData);
 
             JSONObject movieJSON = new JSONObject(jsonData);
             JSONArray resultsJSON = movieJSON.getJSONArray("results");

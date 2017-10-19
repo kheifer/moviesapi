@@ -6,6 +6,7 @@ import org.parceler.Parcel;
 /**
  * Created by Guest on 10/18/17.
  */
+
 @Parcel
 public class Movie {
     private String mPoster;
@@ -17,7 +18,7 @@ public class Movie {
     public Movie(){}
 
     public Movie(String poster, String title, String synopsis, String release, double rating){
-        this.mPoster = poster;
+        this.mPoster = getLargeImageUrl(poster);
         this.mTitle = title;
         this.mSynopsis = synopsis;
         this.mRelease = release;
@@ -62,5 +63,10 @@ public class Movie {
 
     public void setmRating(double mRating) {
         this.mRating = mRating;
+    }
+
+    public String getLargeImageUrl(String poster){
+        String largImageUrl = "http://image.tmdb.org/t/p/w500/".concat(poster);
+        return  largImageUrl;
     }
 }
