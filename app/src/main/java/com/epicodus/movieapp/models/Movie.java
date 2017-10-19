@@ -1,15 +1,20 @@
-package com.epicodus.movieapp;
+package com.epicodus.movieapp.models;
+
+import org.parceler.Parcel;
+
 
 /**
  * Created by Guest on 10/18/17.
  */
-
+@Parcel
 public class Movie {
     private String mPoster;
     private String mTitle;
     private String mSynopsis;
     private String mRelease;
     private double mRating;
+
+    public Movie(){}
 
     public Movie(String poster, String title, String synopsis, String release, double rating){
         this.mPoster = poster;

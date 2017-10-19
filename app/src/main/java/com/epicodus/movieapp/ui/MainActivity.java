@@ -1,7 +1,6 @@
-package com.epicodus.movieapp;
+package com.epicodus.movieapp.ui;
 
 import android.content.Intent;
-import android.support.annotation.BinderThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+
+import com.epicodus.movieapp.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -1,12 +1,19 @@
-package com.epicodus.movieapp;
+package com.epicodus.movieapp.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.epicodus.movieapp.adapters.MovieListAdapter;
+import com.epicodus.movieapp.services.MovieService;
+import com.epicodus.movieapp.R;
+import com.epicodus.movieapp.models.Movie;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -19,9 +26,10 @@ import okhttp3.Response;
 
 
 public class MovieListActivity extends AppCompatActivity {
-     public static final String TAG = "TEST/MovieListActivity";
-     @Bind(R.id.responseTextView) TextView mNewSearchString;
-     @Bind(R.id.listView) ListView mListView;
+    public static final String TAG = "TEST/MovieListActivity";
+    @Bind(R.id.responseTextView) TextView mNewSearchString;
+    @Bind (R.id.recycleViewer) RecyclerView mRecycleView;
+    private MovieListAdapter mAdapter;
     public ArrayList<Movie> movies = new ArrayList<>();
 
     @Override
@@ -57,13 +65,12 @@ public class MovieListActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        String[] movieTitles = new String[movies.size()];
-                        for (int i =0; i<movieTitles.length; i++){
-                            movieTitles[i] = movies.get(i).getmTitle();
-                            Log.d("getTitle", movieTitles[i]);
-                        }
-                        ArrayAdapter adapter = new ArrayAdapter(MovieListActivity.this, android.R.layout.simple_list_item_1, movieTitles);
-                        mListView.setAdapter(adapter);
+                        mAdapter = new MovieListAdapter(getApplicationContext(), movies);
+                        mRecycleView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layout = new LinearLayoutManager(MovieListActivity.this);
+                        mRecycleView.setLayoutManager(layout);
+                        mRecycleView.setHasFixedSize(true);
+
                     }
                 });
 
