@@ -3,11 +3,19 @@ package com.epicodus.movieapp;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Guest on 10/18/17.
@@ -32,6 +40,30 @@ public class MovieService {
 
         Call call = client.newCall(request);
         call.enqueue(callback);
+    }
+    public ArrayList<Movie> processResults(String jsonData){
+        ArrayList<Movie> movies = new ArrayList<>();
+        try{
+            JSONObject movieJSON = new JSONObject(jsonData);
+            JSONArray resultsJSON = movieJSON.getJSONArray("results");
+            for (int i =0; i < resultsJSON.length(); i++){
+                JSONObject parseableJSON = resultsJSON.getJSONObject(i);
+
+                String poster = parseableJSON.getString("poster_path");
+                String title = parseableJSON.getString("title");
+                String synopsis = parseableJSON.getString("overview");
+                Double rating = parseableJSON.getDouble("vote_average");
+                String release = parseableJSON.getString("release_date");
+
+                Movie movie = new Movie(poster, title, synopsis, release, rating);
+                movies.add(movie);
+
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return movies;
     }
 
 }
