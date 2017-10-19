@@ -41,11 +41,19 @@ public class MovieService {
         Call call = client.newCall(request);
         call.enqueue(callback);
     }
-    public ArrayList<Movie> processResults(String jsonData){
+    public ArrayList<Movie> processResults(Response response){
         ArrayList<Movie> movies = new ArrayList<>();
+
+        Log.d("INSIDE", "a thing");
+
         try{
+            String jsonData = response.body().string();
+
+            Log.d("JSONdataString", jsonData);
+
             JSONObject movieJSON = new JSONObject(jsonData);
             JSONArray resultsJSON = movieJSON.getJSONArray("results");
+
             for (int i =0; i < resultsJSON.length(); i++){
                 JSONObject parseableJSON = resultsJSON.getJSONObject(i);
 
@@ -59,9 +67,12 @@ public class MovieService {
                 movies.add(movie);
 
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         catch (JSONException e) {
             e.printStackTrace();
+            Log.d("insideJSON", "hey"+ e);
         }
         return movies;
     }
