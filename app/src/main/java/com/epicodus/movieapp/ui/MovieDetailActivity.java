@@ -29,7 +29,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         Log.d(" ","here" );
         mMovies = Parcels.unwrap(getIntent().getParcelableExtra("movies"));
 
-        int startingPosition = getIntent().getIntExtra("position", 0);
+        int startingPosition = Integer.parseInt(getIntent().getStringExtra("position"));
 
         adapterViewPager = new MoviePagerAdapter(getSupportFragmentManager(), mMovies);
         mViewPager.setAdapter(adapterViewPager);

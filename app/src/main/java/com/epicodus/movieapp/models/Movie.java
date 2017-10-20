@@ -3,17 +3,13 @@ package com.epicodus.movieapp.models;
 import org.parceler.Parcel;
 
 
-/**
- * Created by Guest on 10/18/17.
- */
-
 @Parcel
-public class Movie {
+public class Movie{
     private String mPoster;
     private String mTitle;
     private String mSynopsis;
     private String mRelease;
-    private double mRating;
+    private Double mRating;
 
     public Movie(){}
 
@@ -57,7 +53,7 @@ public class Movie {
         this.mRelease = mRelease;
     }
 
-    public double getmRating() {
+    public Double getmRating() {
         return mRating;
     }
 

@@ -81,11 +81,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         @Override
         public void onClick(View v){
             int itemPosition = getLayoutPosition();
-            Log.d("context", mContext+"");
             Intent intent = new Intent(mContext, MovieDetailActivity.class);
-            intent.putExtra("position",itemPosition);
+            intent.putExtra("position",itemPosition + "");
             intent.putExtra("movies", Parcels.wrap(mMovies));
-            Log.d("Intent", intent+"");
             mContext.startActivity(intent);
         }
     }

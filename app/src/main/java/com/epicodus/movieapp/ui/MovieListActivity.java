@@ -27,7 +27,6 @@ import okhttp3.Response;
 
 public class MovieListActivity extends AppCompatActivity {
     public static final String TAG = "TEST/MovieListActivity";
-    @Bind(R.id.responseTextView) TextView mNewSearchString;
     @Bind (R.id.recycleViewer) RecyclerView mRecycleView;
     private MovieListAdapter mAdapter;
     public ArrayList<Movie> mMovies = new ArrayList<>();
@@ -42,7 +41,6 @@ public class MovieListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String query = intent.getStringExtra("query");
 
-        mNewSearchString.setText("You searched for: " + query);
 
         getMovies(query);
     }
@@ -68,9 +66,9 @@ public class MovieListActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mAdapter = new MovieListAdapter(getApplicationContext(), mMovies);
-                        RecyclerView.LayoutManager layout = new LinearLayoutManager(MovieListActivity.this);
                         mRecycleView.setAdapter(mAdapter);
-                        mRecycleView.setLayoutManager(layout);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MovieListActivity.this);
+                        mRecycleView.setLayoutManager(layoutManager);
                         mRecycleView.setHasFixedSize(true);
 
                     }

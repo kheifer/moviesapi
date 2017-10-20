@@ -35,8 +35,6 @@ public class MovieService {
 
         String url = urlBuilder.build().toString();
 
-        Log.d("URL", url);
-
         Request request = new Request.Builder()
                         .url(url)
                         .build();

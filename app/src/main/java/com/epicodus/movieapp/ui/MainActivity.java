@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view == mButton){
-            Intent searchIntent = new Intent(MainActivity.this, MovieListActivity.class);
             String query= mEditText.getText().toString();
+            Intent searchIntent = new Intent(MainActivity.this, MovieListActivity.class);
             searchIntent.putExtra("query", query);
             startActivity(searchIntent);
         }
