@@ -1,6 +1,8 @@
 package com.epicodus.movieapp.ui;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
     @Bind(R.id.movieImage) ImageView mImage;
     @Bind(R.id.ratingTextView) TextView mRating;
     @Bind(R.id.releaseDate) TextView mRelease;
+    @Bind(R.id.websiteTextView) TextView mWebsite;
 
     private Movie mMovie;
 
@@ -63,11 +66,16 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
         mRating.setText(Double.toString(mMovie.getmRating()) + "/10");
         mRelease.setText(mMovie.getmRelease());
 
+        mWebsite.setOnClickListener(this);
+
         return view;
     }
 
     @Override
     public void onClick(View view) {
-
+        if(view == mWebsite){
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com/search?q=" + mMovie.getmTitle()));
+            startActivity(webIntent);
+        }
     }
 }
